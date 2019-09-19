@@ -17,7 +17,7 @@ class ToDo extends React.Component {
   }
 
   handleInputChange = e => {
-    this.setState({ item: {...this.state.item, [e.target.name]: e.target.value} });
+    this.setState({ item: { ...this.state.item, [e.target.name]: e.target.value } });
   };
 
   handleSubmit = (e) => {
@@ -29,32 +29,27 @@ class ToDo extends React.Component {
     e.preventDefault();
     e.target.reset();
 
-    const defaults = { _id: uuid(), complete:false };
+    const defaults = { _id: uuid(), complete: false };
     const item = Object.assign({}, this.state.item, defaults);
 
     this.setState({
       todoList: [...this.state.todoList, item],
       item: {}
     });
-
   };
 
   deleteItem = id => {
-
     this.setState({
       todoList: this.state.todoList.filter(item => item._id !== id)
     });
-
   };
 
   saveItem = updatedItem => {
-
     this.setState({
       todoList: this.state.todoList.map(item =>
         item._id === updatedItem._id ? updatedItem : item
       )
     });
-
   };
 
   toggleComplete = id => {
@@ -66,9 +61,9 @@ class ToDo extends React.Component {
   };
 
   toggleDetails = id => {
-    let showDetails = ! this.state.showDetails;
-    let details = this.state.todoList.filter( item => item._id === id )[0] || {}
-    this.setState({details, showDetails});
+    let showDetails = !this.state.showDetails;
+    let details = this.state.todoList.filter(item => item._id === id)[0] || {}
+    this.setState({ details, showDetails });
   }
 
   render() {
@@ -78,7 +73,7 @@ class ToDo extends React.Component {
         <header>
           <h2>
             There are
-            {this.state.todoList.filter( item => !item.complete ).length}
+            {this.state.todoList.filter(item => !item.complete).length}
             Items To Complete
           </h2>
         </header>
@@ -114,14 +109,14 @@ class ToDo extends React.Component {
 
           <div>
             <ul>
-              { this.state.todoList.map(item => (
+              {this.state.todoList.map(item => (
                 <li
                   className={`complete-${item.complete.toString()}`}
                   key={item._id}
                 >
-              <span onClick={() => this.toggleComplete(item._id)}>
-                {item.text}
-              </span>
+                  <span onClick={() => this.toggleComplete(item._id)}>
+                    {item.text}
+                  </span>
                   <button onClick={() => this.toggleDetails(item._id)}>
                     Details
                   </button>
